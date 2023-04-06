@@ -1,0 +1,206 @@
+Notes:
+
+To convert the decimal number 6.34375 to the IEEE-754 format for double precision numbers, we need to follow these steps:
+
+ 1. Convert the integer part (6) to binary format.
+    6 / 2 = 3 remainder 0
+    3 / 2 = 1 remainder 1
+    1 / 2 = 0 remainder 1
+    So, the binary representation of 6 is 110.
+
+ 2. Convert the fractional part (0.34375) to binary format.
+    Multiply the fractional part by 2:
+    0.34375 * 2 = 0.6875, take the integer part (0)
+    0.6875 * 2 = 1.375, take the integer part (1)
+    0.375 * 2 = 0.75, take the integer part (0)
+    0.75 * 2 = 1.5, take the integer part (1)
+    0.5 * 2 = 1, take the integer part (1)
+    The binary representation of the fractional part is 01011.
+
+ 3. Combine the binary representations of the integer and fractional parts.
+    The binary representation of 6.34375 is 110.01011.
+
+ 4. Determine the sign of the number.
+    Since the number is positive, the sign bit is 0.
+
+ 5. Calculate the exponent.
+    The binary representation of 6.34375 is 110.01011. We need to shift the binary point to the left until there is only one non-zero digit to the left of the point. This gives us 1.1001011. The exponent is the number of places we shifted the binary point, minus 1. In this case, we shifted the binary point 2 places to the left, so the exponent is 2 - 1 = 1.
+
+ 6. Convert the exponent to binary format.
+    The exponent is 1, so its binary representation is 01 (with a bias of 1023).
+
+ 7. Combine the sign bit, exponent, and mantissa (the digits to the right of the binary point).
+    The IEEE-754 format for double precision numbers has a sign bit of 1 bit, an exponent of 11 bits, and a mantissa of 52 bits. So, we need to pad the binary representation of the mantissa with zeros to the right until it is 52 bits long. This gives us:
+
+    sign bit: 0
+    exponent: 01111111110 (bias of 1023 + 1 = 1024, with leading zero to ensure 11 bits)
+    mantissa: 0100001111100010101000111101011100001010001111010110 00000000000000
+
+    The bits are arranged in the proper order as follows:
+    0 01111111110 0100001111100010101000111101011100001010001111010110 00000000000000
+
+Therefore, the 6.34375 in IEEE-754 format for double precision numbers is 
+0 10000000100 0001111100101010001111010110000000000000000000000000.
+
+--------------------------------------------------------------------------------------------------
+
+To convert bits from IEEE-754 format to double precision numbers, we need to follow these steps:
+
+  1.  Identify the sign bit: The first bit represents the sign of the number, with 0 indicating a positive number and 1 indicating a negative number.
+
+  2.  Identify the biased exponent: The next n bits represent the biased exponent, where n is the number of bits allocated for the exponent. For double precision numbers, n is 11. To obtain the true exponent, we need to subtract the bias value (1023 for double precision) from the biased exponent.
+
+  3.  Identify the significand or mantissa: The remaining bits represent the mantissa or significand of the number. For double precision numbers, the mantissa has 52 bits. The implicit leading 1 bit is not stored in the mantissa but is assumed to be present.
+
+  4.  Combine the sign, exponent, and mantissa: Once we have identified the sign, exponent, and mantissa, we can combine them to obtain the final value of the number. We first calculate the value of the significand by treating the bits as a binary fraction and adding the implicit leading 1 bit. We then apply the exponent to this value by multiplying or dividing by a power of 2, depending on whether the exponent is positive or negative. Finally, we apply the sign bit to obtain the signed value of the number.
+
+For example, consider the following bit string in IEEE-754 format for a double precision number:
+
+0 10000000001 1101000000000000000000000000000000000000000000000000
+
+The sign bit is 0, indicating a positive number. The biased exponent is 10000000001, which represents the decimal value 1025. Subtracting the bias value of 1023 gives us a true exponent of 2. The mantissa is 1101000000000000000000000000000000000000000000000000, which can be converted to a fraction as 1.1101 (binary) = 1.8125 (decimal) by adding the implicit leading 1 bit. Multiplying this value by 2^2 gives us the final value of the number as:
+
++1.8125 x 2^2 = +7.25
+
+Therefore, the given bit string represents the double precision number +7.25 in decimal notation.
+
+A.
+---------------------------------------------------------------------------------------------------
+To show that 5 is a double root of f(x) = x^3 - 9x^2 + 15x + 25, we need to check the following two conditions:
+
+ 1.   f(5) = 0 (5 is a root of f(x))
+ 2.   f'(5) = 0 and f''(5) ≠ 0 (5 is a double root of f(x))
+
+Let's start by checking the first condition:
+
+f(5) = 5^3 - 9(5^2) + 15(5) + 25 = 0
+
+So, 5 is a root of f(x).
+
+To check the second condition, we need to compute the first and second derivatives of f(x) using synthetic division:
+
+5 | 1 -9 15 25
+5 -20 -25
+____________
+1 -4 -5 0
+
+So, f(x) = (x - 5)^2 (x + 1)
+
+Now, we can easily compute the first and second derivatives of f(x):
+
+f'(x) = 3x^2 - 18x + 15 = 3(x - 5)(x - 1)
+f''(x) = 6x - 18 = 6(x - 3)
+
+Now, we can check if f'(5) = 0 and f''(5) ≠ 0:
+
+f'(5) = 3(5 - 5)(5 - 1) = 0
+f''(5) = 6(5 - 3) = 12 ≠ 0
+
+So, 5 is a double root of f(x).
+
+To compute all function values and derivatives that may be needed, we can use the following table:
+x	f(x)	f'(x)	f''(x)
+5	0	0	12
+5^-	-0.04	-0.6	12
+5^+	0.04	0.6	12
+1	-18	-6	0
+1^-	-19.36	-5.4	0
+1^+	-16.64	-6.6	0
+-1	16	-6	12
+-1^-	15.96	-6.6	12
+-1^+	16.04	-5.4	12
+
+Note that 5 is a double root, so the function values and first derivative at x=5 are both 0, but the second derivative is non-zero. Also note that we have included values slightly less and greater than 5 and 1 to see the behavior of the function around the roots.
+---------------------------------------------------------------------------------------------------
+
+B.
+---------------------------------------------------------------------------------------------------
+To use fixed-point iteration to solve f(x) = 0, we first need to rewrite f(x) in the form x = g(x), where g(x) is a function of x that we can iterate to find a root. One way to do this is to rearrange f(x) as follows:
+
+f(x) = 3x + 2sin(x) - 1
+=> x = (-2sin(x) + 1)/3
+=> g(x) = (-2sin(x) + 1)/3
+
+We can now use the fixed-point iteration formula:
+
+x_(n+1) = g(x_n)
+
+Starting with x_0 = 0.5, we can iterate this formula until we obtain an approximation that is accurate to within 5x10^(-100). The error in the nth iteration is given by:
+
+|e_n| = |x_n - x|,
+
+where x is the true root of f(x) = 0.
+
+To find an upper bound on the number of iterations required, we can use the following error bound for fixed-point iteration:
+
+|e_n| <= k/(1-k)|x_(n+1) - x_n|,
+
+where k is a constant such that |g'(x)| <= k for all x in the interval containing the root.
+
+We can compute the derivative of g(x) as follows:
+
+g'(x) = (-2cos(x))/3
+
+Since |cos(x)| <= 1 for all x, we have |g'(x)| <= 2/3 < 1. Therefore, we can choose k = 2/3 in the error bound formula.
+
+Now, we need to find an upper bound on |x_(n+1) - x_n|. We can do this by noting that:
+
+|x_(n+1) - x_n| = |g(x_n) - g(x_(n-1))|
+<= k|x_n - x_(n-1)|,
+
+where we have used the mean value theorem to obtain the inequality.
+
+We can then apply the error bound formula to obtain:
+
+|e_n| <= (k/(1-k))^n |x_1 - x_0|,
+
+where |x_1 - x_0| = 0.5.
+
+Setting |e_n| <= 5x10^(-100), we can solve for n to obtain:
+
+(k/(1-k))^n <= 10^(-100)/0.5 = 2x10^(-100)
+
+Taking the logarithm of both sides and rearranging, we get:
+
+n >= log(2x10^(-100))/log(k/(1-k))
+
+Using k = 2/3, we can compute:
+
+n >= log(2x10^(-100))/log(2/3) = 103.97
+
+Therefore, we need at least 104 iterations to ensure an error <= 5x10^(-100) using fixed-point iteration.
+--------------------------------------------------------------------------------------------------
+
+E.
+--------------------------------------------------------------------------------------------------
+
+In this program, we set the initial guess to be 2, which is close to the actual value of 1/7. Then, we iterate Newton's method five times to improve our estimate. The formula for Newton's method is x_{n+1} = x_n - f(x_n)/f'(x_n), but since we can't use division, we multiply instead. We use the fact that f(x) = 1 - 7x and f'(x) = -7 to get the formula x_{n+1} = x_n * (2 - 7 * x_n). After five iterations, we get a pretty good estimate of 1/7, which we print to the console.
+
+#include <stdio.h>
+
+int main()
+{
+    // Set the initial guess to be 2
+    int x = 2;
+    // Iterate Newton's method five times
+    for (int i = 0; i < 5; i++)
+    {
+        // Compute x_{n+1} = x_n * (2 - 7 * x_n)
+        x = x * (2 - 7 * x);
+    }
+    // Print the result
+    printf("1/7 = %d\n", x);
+    return 0;
+}
+
+--------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+

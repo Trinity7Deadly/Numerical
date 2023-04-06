@@ -1,0 +1,70 @@
+
+     Lab #2 :
+     Finding all roots of a Polynomial
+       Using Newton's Method
+
+Write a program that uses Newton's method
+to find ALL of the roots of a polynomial,
+even the complex roots.
+
+The user of the program should only enter the
+information that describes the polynomial :
+
+  the degree of the polynomial first
+  then the leading coefficient, on and on until 
+  finally the constant coefficient.
+
+For example, if the polynomial is
+   2x^5 + 7x^4 - 9x^3 + 17x^2 + 30x -12
+
+then the input will be
+
+    5  (this is the degree)
+    2  (this is the leading coefficient)
+    7
+    -9
+    17
+    30
+   -12 (this is the constant coefficient)
+   
+    
+The program should generate its own guesses
+for the Newton's method algorithm.  These
+guesses should have a non-zero imaginary
+part if you wish to find the complex roots...
+starting with a real guess will only find
+a real root.
+
+Once Newton's method finds its first root,
+use synthetic division to deflate the polynomial
+and then proceed to find a root of the defalted
+poly.  Once a root is found for this deflated
+polynomial, deflate again and continue until
+all roots have been found.
+
+We recommend just running Newton's method 50 times
+for each root....this will probably work well
+enough.
+
+Synthetic division must be used not only for deflating
+the polynomial but also for evaluating the polynomial
+and it derivative.  
+
+Several test cases have been suplied in the file
+
+poly_tests.txt
+
+Your code should work on the vast majority of these
+test cases though a single exception will not be judged
+as a blemish.
+
+
+
+
+
+
+
+
+
+
+

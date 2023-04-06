@@ -1,0 +1,54 @@
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
+#include <complex.h>
+#include <string.h>
+
+// Riemann sum of the given function f(x)
+double f(double x) {
+  double y ;
+  y = (6*x*x) + 4*x ;
+  return y ;
+}
+
+double riemann(double a, double b, int n) {
+  double sum = 0 ;
+  double length = (b-a)/n ;
+
+  for (int i = 0; i < n; i++) {
+    sum = sum + f(a) ;
+    a += length ;
+  }
+  sum = sum * length ;
+
+  printf("Riemann's: %lf \n", sum) ;
+}
+
+double trapzoid(double a, double b, int n) {
+  double sum = (f(a) + f(b))/2 ;
+  double length = (b-a)/n ;
+
+  for (int i = 0; i < n; i++) {
+    a += length ;
+    sum += f(a) ;
+  }
+  sum = sum * length ;
+
+  printf("Trapazoid: %lf \n", sum) ;
+}
+
+int main() {
+  double a, b ;
+  int n ;
+
+  printf("Enter Left Point: ") ;
+  scanf("%lf", &a) ;
+  printf("Enter Right Point: ") ;
+  scanf("%lf", &b) ;
+  printf("Enter Number Divisions: ") ;
+  scanf("%d", &n) ;
+
+  riemann(a, b, n) ;
+  printf("\n") ;
+  trapzoid(a, b, n) ;
+}

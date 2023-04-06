@@ -1,0 +1,17 @@
+4
+
+3  4  2   8    9
+5  8  6  22   29
+6  5  1   3    3
+2  1  1   1    5
+
+
+underdetermined ... r2 = 3r1 - r3 + r4
+
+BUT gauss_elimC.c  thinks that there is
+a unique solution of (0, -0.5, 5.5, 0)
+This is indeed a solution but there are others.
+
+gausselim_better.c correctly realizes that
+this system does not have a unique solution.
+
