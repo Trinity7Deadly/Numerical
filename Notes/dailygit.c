@@ -10,3 +10,9 @@
 	git add NameOfThing
 	git commit -a -m "date"
 	git push
+	
+// same as above, but faster
+
+	git add *
+	git commit -a -m "date"
+	git push
