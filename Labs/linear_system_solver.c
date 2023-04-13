@@ -31,39 +31,29 @@ int manual_setup(int row, double **matrix) {
   printf("\n") ;
   for (i = 0; i < row; i++) {
     for (j = 0; j < colm; j++) {
-      printf("%8.6lf ", matrix[i][j]) ;
+      printf("%8.6lf  ", matrix[i][j]) ;
     }
     printf("\n") ;
   }
 }
 
 // Reads the file that the user wants
-int auto_setup(double ** m) {
-  char fname[100] ;
-  FILE *f ;
+int auto_setup(double ** m, int size, FILE * f) {
   int n ;
   int r,c ;
-
-  printf("enter the name of the file to be read : ") ;
-  scanf("%s", fname) ;
-  f = fopen(fname, "r") ;
-  if (f == NULL) {
-    printf("can't read file\n") ;
-    exit(0) ;
-  }
   
-  fscanf(f,"%d",&n) ;
-  for (r = 1 ; r <= n ; r++) {
-    for (c = 1 ; c <= n+1 ; c++) {
+  n = size;
+  for (r = 0 ; r < n ; r++) {
+    for (c = 0 ; c < n+1 ; c++) {
       fscanf(f,"%lf", &m[r][c]) ;
     }
   }
 
   
   printf("\n") ;  
-  for (r = 1 ; r <= n ; r++) {
-    for (c = 1 ; c <= n+1 ; c++) {
-      printf("%10.5lf", m[r][c]) ;
+  for (r = 0 ; r < n ; r++) {
+    for (c = 0 ; c < n+1 ; c++) {
+      printf("%10.5lf  ", m[r][c]) ;
     }
     printf("\n") ;
   }  
@@ -97,12 +87,14 @@ void make_triangle(double * matrix[], int rows) {
 
   for (int r = 0; r < rows; r++) {
     if (matrix[r][r] == 0) {
+      printf("possible divide by 0\n");
       for (int i = 1; i < rows; i++) {
 	if (matrix[i][r] != 0) {
 	  row_swap(matrix[r], matrix[i]) ;
 	}
       }
     }
+    printf("matrix[%d][%d]: %lf\n",r,r, matrix[r][r]);
     row_adjust(matrix[r], columns, 1/matrix[r][r]) ;
     for (int k = r + 1; k < rows; k++) {
       if (k > rows) { break ; }
@@ -121,14 +113,17 @@ int solve_triangle(double ** matrix, int rows, double * solutions) {
     }
   }
   for (int k = 0; k < rows; k++) {
+    printf("\t%lf\n",matrix[k][rows]) ;
     solutions[k] = matrix[k][rows] ;
   }
 }
 
 // Main functions where user selects how the matrix will be entered
-int main() {
+int main(int argc, char ** argv) {
   int num ;
   double solutions[20] ;
+  char fname[100] ;
+  FILE *f ;
 
   printf("Enter 0 for Manual and 1 for Automatic: ") ;
   scanf("%d", &Read_Only) ;
@@ -148,16 +143,32 @@ int main() {
     solve_triangle(matrix, num, solutions) ;
     
   } else {
-    num = 20;
+    printf("enter the name of the file to be read : ") ;
+    scanf("%s", fname) ;
+    f = fopen(fname, "r") ;
+    
+    //printf("opened file\n") ;
+    
+    if (f == NULL) {
+      printf("can't read file\n") ;
+      exit(0) ;
+    }
+  
+    fscanf(f,"%d",&num) ;
+    
+    //printf("Scanned file\n") ;
+    
     double **matrix = (double **)malloc(num * sizeof(double *)) ;
     for (int i = 0; i < num; i++) {
       matrix[i] = (double *)malloc(num * sizeof(double)) ;
     }
+    //printf("Malloc complete\n");  
+    auto_setup(matrix,num,  f) ;
     
-    auto_setup(matrix) ;
-
-    make_triangle(matrix, num) ;
-    solve_triangle(matrix, num, solutions) ;
+    //printf("auto_setup completed\n") ;
+    
+    make_triangle(matrix, num) ;  
+    solve_triangle(matrix, num, solutions) ; 
   }
 
   for (int i = 0; i < num; i++) {
