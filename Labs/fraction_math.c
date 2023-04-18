@@ -5,7 +5,8 @@
 #include <string.h>
 
 // Define long int as lint for later use
-typedef long int
+typedef
+long int
 lint ;
 
 // Create a structure called fraction for later use
@@ -16,7 +17,7 @@ typedef struct {
 
 // Prints the fraction in a legible format
 void print_frac(char front[], fraction a, char back[]) {
-  printf("%s(%ld/%ld)%s", front, a.n, a.d, back) ;
+  printf("%s[%ld/%ld]%s", front, a.n, a.d, back) ;
 }
 
 // Checks if the fraction is zero
@@ -36,11 +37,11 @@ lint greatestCD(lint a, lint b) {
   } else if (b == 0) {
     return a ;
     
-  } else if (a > b) {
-    return greatestCD(a%b, b) ;
+  } else if (b > a) {
+    return greatestCD(a, b%a) ;
     
   } else {
-    return greatestCD(a, b%a) ;
+    return greatestCD(a%b, b) ;
     
   }
 }
@@ -55,9 +56,9 @@ fraction reduce_frac(fraction a) {
   frac.n = frac.n/temp ;
   frac.d = frac.d/temp ;
 
-  if (r.d < 0) {
-    r.d = -r.d ;
-    r.n = -r.n ;
+  if (frac.d < 0) {
+    frac.d = -frac.d ;
+    frac.n = -frac.n ;
   }
 
   return frac ;
