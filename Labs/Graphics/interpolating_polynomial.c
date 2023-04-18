@@ -30,8 +30,21 @@ int click_save(double *x, double *y) {
 // Does the math
 int math(double *x, double *y, int numpts) {
   G_rgb(0, 1, 0) ;
-  for (int i = 0; i < 800; i++) {
+  for (double interval = 0; interval < 800; interval++) {
+    double y_int = 0 ;
     
+    for (int i = 0; i < numpts; i++) {
+      double temp_var = y[i] ;
+      
+      for (int k = 0; k < numpts; k++) {
+	if (k != i) {
+	  temp_var *= (interval - x[k])/(x[i] - x[k]) ;
+	  
+	}
+      }
+      y_int += temp_var ;
+    }
+    G_fill_circle(interval, y_int, 1) ;
   }
 }
 

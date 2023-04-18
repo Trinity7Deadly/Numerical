@@ -1,4 +1,7 @@
 #include "FPToolkit.c"
+#include "linear_system_solver.c"
+
+double sols[2] ;
 
 // Allows points to be clicked on screen
 int click_save(double *x, double *y) {
@@ -31,16 +34,28 @@ int click_save(double *x, double *y) {
 int math(double *x, double *y, int numpts) {
   double totalX, totalY ;
   double totalXY, powerX ;
+
+  double **matrix = (double **)malloc(2 * sizeof(double *)) ;
+  for (int i = 0; i < 2; i++) {
+    matrix[i] = (double *)malloc((3) * sizeof(double)) ;
+  }
+  
   for (int i = 0; i < numpts; i++) {
-    totalX += x(i) ;
-    totalY += y(i) ;
-    powerX += x(i) * x(i) ;
-    totalXY += x(i) * y(i) ;
+    totalX += x[i] ;
+    totalY += y[i] ;
+    powerX += x[i] * x[i] ;
+    totalXY += x[i] * y[i] ;
   }
 
-  // solve the linear system of:
-  // A*numpts + B*totalX = totalY
-  // A*totalX + B*powerX = totalXY
+  matrix[0][0] = numpts ;
+  matrix[0][1] = totalX ;
+  matrix[0][2] = totalY ;
+  matrix[1][0] = totalX ;
+  matrix[1][1] = powerX ;
+  matrix[1][2] = totalXY ;
+
+  make_triangle(matrix, 2) ;
+  solve_triangle(matrix, 2, sols) ;
 }
 
 // Main function
@@ -55,6 +70,11 @@ int main() {
   n = click_save(x, y) ;
 
   math(x, y, n) ;
+
+  for (int i = 0; i < 800; i++) {
+    G_rgb(0, 1, 0) ;
+    G_fill_circle(i, (sols[1]*i) + sols[0], 1) ;
+  }
 
   G_wait_key() ;
 }
