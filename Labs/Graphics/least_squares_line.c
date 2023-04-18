@@ -1,5 +1,5 @@
 #include "FPToolkit.c"
-#include "linear_system_solver.c"
+#include "linear_system_toolkit.c"
 
 double sols[2] ;
 
@@ -34,6 +34,11 @@ int click_save(double *x, double *y) {
 int math(double *x, double *y, int numpts) {
   double totalX, totalY ;
   double totalXY, powerX ;
+
+  totalX = 0 ;
+  totalY = 0 ;
+  powerX = 0 ;
+  totalXY = 0 ;
 
   double **matrix = (double **)malloc(2 * sizeof(double *)) ;
   for (int i = 0; i < 2; i++) {

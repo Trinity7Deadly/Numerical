@@ -1,0 +1,87 @@
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
+
+
+int Tdegree ;
+
+
+
+int print_T (char before[], char control[], double t[], char after[]) ;
+// control is the control string for the doubles
+// that will be printed
+
+
+int copy_T (double dest[], double source[]) ;
+
+
+int make_constant_T(double t[], double v) ;
+
+
+int make_variable_T(double t[], double v) ;
+// essentially makes a linear with value, v
+
+
+//////////////////////////////////////////////////////////
+// should be safe for any and all of these parameter
+// pointers to point to same things
+
+
+int Add_cons_T (double r[], double constant) ;
+// r =  r + constant
+
+
+int Mul_cons_T (double r[], double constant) ;
+// r =  r * constant
+
+
+int Add_T (double r[], double u[], double v[]) ;
+// r = u + v
+
+
+int Sub_T (double r[], double u[], double v[]) ;
+// r = u - v
+
+
+int Mul_T (double r[], double u[], double v[]) ;
+// r = u * v
+
+
+int Div_T (double r[], double u[], double v[]) ;
+// r = u / v
+
+
+int exp_T (double r[],  double u[]) ;
+// r = exp(u)
+
+
+int ln_T  (double r[],  double u[]) ;
+// r = ln(u)
+
+
+int cossin_T (double c[], double s[], double u[]) ;
+// c = cos(u) , s = sin(u)
+
+
+int cos_T (double r[],  double u[]) ;
+
+
+int sin_T (double r[],  double u[]) ;
+
+
+int tan_T (double r[],  double u[]) ;
+
+
+int sqrt_T (double r[],  double u[]) ;
+
+
+int cpow_T (double r[], double u[], double cpow) ;
+// p = u^c
+
+
+int cbrt_T (double r[],  double u[]) ;
+
+
+int atan_T (double r[],  double u[]) ;
+
+
