@@ -11,8 +11,8 @@ lint ;
 
 // Create a structure called fraction for later use
 typedef struct {
-  lint a ;
-  lint b ;
+  lint n ;
+  lint d ;
 } fraction ;
 
 // Prints the fraction in a legible format
@@ -80,10 +80,10 @@ fraction add_frac(fraction a, fraction b) {
   tempA.d = a.d * b.d;
 
   tempB.n = b.n * a.d;
-  tempB.d = ta.d;
+  tempB.d = tempA.d;
 
-  temp.n = ta.n + tb.n;
-  temp.d = tb.d;
+  temp.n = tempA.n + tempB.n;
+  temp.d = tempB.d;
 
   return reduce_frac(temp) ;
 }
@@ -91,10 +91,10 @@ fraction add_frac(fraction a, fraction b) {
 // Subtracts two fractions
 fraction subtract_frac(fraction a, fraction b) {
   fraction temp;
-  tempB.n = -1 * b.n;
-  tempB.d = b.d;
+  temp.n = -1 * b.n;
+  temp.d = b.d;
 
-  return add_frac(a, tempB);
+  return add_frac(a, temp);
 }
 
 // Multiplies two fractions

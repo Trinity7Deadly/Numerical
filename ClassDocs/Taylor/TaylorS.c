@@ -123,16 +123,53 @@ int Mul_T (double r[], double u[], double v[]) {
   return 1 ;
 }
 
-// r = 
-int Div_T () {
+// not fully working, play with it
+int Div_T (double r[], double u[], double v[]) {
   int n, k ;
   double sum ;
   double p[1000] ;
 
-  
+  for (n = 0; n <= Tdegree; n++) {
+    sum = 0.0 ;
+
+    for (k = 0; k <= n; k++) {
+      sum = sum + u[k] / v[n-k] ;
+    }
+
+    p[n] = sum ;
+  }
+
+  copy_T (r, p) ;
+
+  return 1 ;
 }
 
-// r =
-int Exp_T () {
-  
+/*
+int exp_T (double r[], double u[]) {
+  int n, k ;
+  double sum ;
+  double p[1000] ;
+
+  for () {
+
+  }
+
+  copy_T (r, p) ;
+
+  return 1 ;
 }
+
+int NatLog_T (double r[], double u[]) {
+  int n, k ;
+  double sum ;
+  double p[1000] ;
+
+  for () {
+
+  }
+
+  copy_T (r, p) ;
+
+  return 1 ;
+}
+*/
