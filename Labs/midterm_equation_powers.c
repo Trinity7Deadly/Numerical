@@ -14,7 +14,8 @@ int print_matrix(fraction frac[MAX][MAX], int power) {
 
 // solves the matrix
 int solve_matrix(fraction frac[MAX][MAX], int power) {
-  printf("Sum(k^%d) = ", power-1);
+  printf("\n") ;
+  printf("The Sum of %d Power: ", power-1);
   fraction result[power+1];
   for(int i = 0; i <= power; i++) {
     result[i] = create_frac(0,1);
@@ -33,7 +34,7 @@ int solve_matrix(fraction frac[MAX][MAX], int power) {
       print_frac("", result[i], ""); printf("*n^%d + ", i);
     } else {
       print_frac("", result[i], ""); printf("*n^%d\n", i);
-    }     
+    }
   }
 }
 

@@ -10,10 +10,12 @@ long int
 lint ;
 
 // Create a structure called fraction for later use
-typedef struct {
+typedef
+struct {
   lint n ;
   lint d ;
-} fraction ;
+}
+  fraction ;
 
 // Prints the fraction in a legible format
 void print_frac(char front[], fraction a, char back[]) {
@@ -24,26 +26,16 @@ void print_frac(char front[], fraction a, char back[]) {
 int zero_frac(fraction a) {
   if (a.n == 0 && a.d != 0) {
     return 1 ;
-  } else {
-    return 0 ;
   }
+  return 0 ;
 }
 
 // Finds the greatest common denominator
 lint greatestCD(lint a, lint b) {
-  if (a == 0) {
-    return b ;
-    
-  } else if (b == 0) {
-    return a ;
-    
-  } else if (b > a) {
-    return greatestCD(a, b%a) ;
-    
-  } else {
-    return greatestCD(a%b, b) ;
-    
-  }
+  if (a == 0) return b ;
+  else if (b == 0) return a ;
+  else if (b > a)  return greatestCD(a, b%a) ;
+  else return greatestCD(a%b, b) ;
 }
 
 // Reduces the fractoin using the greatestCD function
@@ -53,8 +45,8 @@ fraction reduce_frac(fraction a) {
 
   temp = greatestCD(labs(a.n), labs(a.d)) ;
 
-  frac.n = frac.n/temp ;
-  frac.d = frac.d/temp ;
+  frac.n = a.n/temp ;
+  frac.d = a.d/temp ;
 
   if (frac.d < 0) {
     frac.d = -frac.d ;
