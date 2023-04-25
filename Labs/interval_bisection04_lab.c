@@ -111,8 +111,7 @@ int interval_bisection(double (*f)(double x),
 
 
 
-int main()
-{
+int main() {
   int maxreps,numr ;
   double left_guess,right_guess,res[2] ;
 

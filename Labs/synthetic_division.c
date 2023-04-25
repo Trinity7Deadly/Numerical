@@ -40,7 +40,7 @@ void setup(int degree, complex coef[]) {
 complex synth(complex root, int degree, complex coef[], bool test) {
   complex remainder = coef[0] ;
 	
-  for (int i=0; i<degree; i++) {
+  for (int i = 0; i < degree; i++) {
     if (test) {
       tempcoef[i] = remainder ;
     } else {
