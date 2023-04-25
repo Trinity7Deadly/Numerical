@@ -173,3 +173,13 @@ int NatLog_T (double r[], double u[]) {
   return 1 ;
 }
 */
+
+// Sine stuff
+int Sin_T() {
+
+}
+
+// Cosine stuff
+int Cos_T() {
+
+}
