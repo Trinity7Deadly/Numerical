@@ -178,3 +178,24 @@ int enter(int argc, char ** argv) {
   
   //printf("BATMAN\n") ;
 }
+
+// solves a tri-diagonal system
+int solve_tri_system (double L[], double D[], double R[], double Q[], int n, double x[]) {
+  R[0] /= D[0] ;
+  Q[0] /= D[0] ; 
+  D[0] = 1 ;
+
+  for(int i = 1; i < n; i++) {
+    Q[i] = (Q[i] - L[i] * Q[i-1]) / (D[i] - L[i] * R[i-1]) ;	
+    R[i] /= (D[i] - L[i] * R[i-1]) ;
+    L[i] = 0 ;
+    D[i] = 1 ;
+  }
+  
+  x[n-1] = Q[n-1] ;
+  for(int k = n - 2; k >= 0; k--) {
+    x[k] = Q[k] - (x[k+1] * R[k]) ;
+  }
+  
+  return 1 ;
+}
