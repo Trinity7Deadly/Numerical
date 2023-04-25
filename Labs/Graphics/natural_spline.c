@@ -1,6 +1,16 @@
 #include "FPToolkit.c"
 #include "linear_system_toolkit.c"
 
+// This is the test case
+int test_case(double x[], double y[]) {
+  x[0] = 215 ; y[0] = 480 ;
+  x[1] = 316 ; y[1] = 438 ;
+  x[2] = 365 ; y[2] = 271 ;
+  x[3] = 481 ; y[3] = 170 ;
+
+  return 4 ;
+}
+
 // Takes the input from click_save and creates a tri_diagonal system
 int create_tri_system(double L[], double D[], double R[], double TEMP[], int n, double p[], double q[]) {
   D[0] = 1 ;
@@ -28,7 +38,8 @@ int create_tri_system(double L[], double D[], double R[], double TEMP[], int n, 
   L[n-1] = 1 ;
   D[n-1] = 2 * (p[dot] - p[dot - 1]) ;
   TEMP[n-1] = 0 ;
-  
+
+  print_tri_system(L, D, R, TEMP, n) ;
   return 0 ;
 }
 
@@ -64,48 +75,64 @@ int main() {
   double p[100], q[100] ;
   double L[1000], D[1000], R[1000], TEMP[1000], x[1000] ;
   double tempA, tempB, tempC, y ;
-  int numpoints, sol ;
+  int numpoints, sol, size ;
 
-  G_init_graphics(800,800) ;
-  G_rgb(0,0,0) ; G_clear() ;
+  int test = 0 ;
+  printf("0 for test case and 1 for click: ") ;
+  scanf("%d", &test) ;
 
-  numpoints = click_save(p,q) ;
-  int size = (numpoints - 1) * 2 ;
-
-  create_tri_system(L, D, R, TEMP, size, p, q) ;
-  sol = solve_tri_system(L, D, R, TEMP, size, x) ;
-
-  if (sol != 1) {
-    printf("Could not find a unique solution.\n") ;
-    exit(0) ;
-  }
+  if (test == 0) {
+    G_init_graphics(800,800) ;
+    G_rgb(0,0,0) ; G_clear() ;
   
-  for (int i = 0 ; i < size ; i++) {
-    if (x[i] < 0) {
-      printf("Tri-Diagonal Solution %d:   %lf\n", i+1, x[i]) ;
-    } else {
-      printf("Tri-Diagonal Solution %d:    %lf\n", i+1, x[i]) ;
-    }
-  }
-  
-  printf("\n") ;	
-  G_rgb(0, 1, 0) ;
-  
-  int alpha = 0 ; 
-  int beta = 1 ;
-  for(int j = 1; j < numpoints; j++) {
-    for(int k = p[j-1]; k < p[j]; k++) {
-      tempA =  q[j-1] + (q[j] - q[j-1])/(p[j] - p[j-1]) * (k - p[j-1]) ;
-      tempB = (x[alpha] * (k - p[j-1]) * (k - p[j])) ;
-      tempC = (x[beta] * pow((k - p[j-1]), 2) * (k - p[j])) ;
-      y = tempA + tempB + tempC ;
-      
-      G_fill_circle(k, y, 1) ;
-    }
+    numpoints = test_case(p, q) ;
+    size = (numpoints - 1) * 2 ;
+
+    create_tri_system(L, D, R, TEMP, size, p, q) ;
+    sol = solve_tri_system(L, D, R, TEMP, size, x) ;
     
-    alpha += 2 ;
-    beta += 2 ;
+  } else {
+    G_init_graphics(800,800) ;
+    G_rgb(0,0,0) ; G_clear() ;
+    
+    numpoints = click_save(p, q) ;
+    size = (numpoints - 1) * 2 ;
+
+    create_tri_system(L, D, R, TEMP, size, p, q) ;
+    sol = solve_tri_system(L, D, R, TEMP, size, x) ;
   }
+  
+    if (sol != 1) {
+      printf("Could not find a unique solution.\n") ;
+      exit(0) ;
+    }
+  
+    for (int i = 0 ; i < size ; i++) {
+      if (x[i] < 0) {
+	printf("Tri-Diagonal Solution %d:   %lf\n", i+1, x[i]) ;
+      } else {
+	printf("Tri-Diagonal Solution %d:    %lf\n", i+1, x[i]) ;
+      }
+    }
+  
+    printf("\n") ;	
+    G_rgb(0, 1, 0) ;
+  
+    int alpha = 0 ; 
+    int beta = 1 ;
+    for(int j = 1; j < numpoints; j++) {
+      for(int k = p[j-1]; k < p[j]; k++) {
+	tempA =  q[j-1] + (q[j] - q[j-1])/(p[j] - p[j-1]) * (k - p[j-1]) ;
+	tempB = (x[alpha] * (k - p[j-1]) * (k - p[j])) ;
+	tempC = (x[beta] * pow((k - p[j-1]), 2) * (k - p[j])) ;
+	y = tempA + tempB + tempC ;
+      
+	G_fill_circle(k, y, 1) ;
+      }
+    
+      alpha += 2 ;
+      beta += 2 ;
+    }
   
   G_wait_key() ;
 }

@@ -179,6 +179,30 @@ int enter(int argc, char ** argv) {
   //printf("BATMAN\n") ;
 }
 
+// prints out the matrix
+int print_tri_system(double L[], double D[], double R[], double Q[], int n){
+  for(int i = 0; i < n; i++) {
+    for(int j = 1; j < i; j++) {
+      printf("\t\t") ;
+    }
+    
+    if(i > 0){
+      printf("%8.2f\t", L[i]) ;
+    }
+    
+    printf("%8.2f\t", D[i]) ;
+    if(i < n-1) {
+      printf("%8.2f\t", R[i]) ;
+    }
+    
+    for(int k = n-1; k > i+1; k--) {
+      printf("\t\t") ;
+    }
+    printf("%8.2f", Q[i]) ;
+    printf("\n") ;
+  }
+}
+
 // solves a tri-diagonal system
 int solve_tri_system (double L[], double D[], double R[], double Q[], int n, double x[]) {
   R[0] /= D[0] ;
@@ -191,6 +215,8 @@ int solve_tri_system (double L[], double D[], double R[], double Q[], int n, dou
     L[i] = 0 ;
     D[i] = 1 ;
   }
+
+  print_tri_system(L, D, R, Q, n) ;
   
   x[n-1] = Q[n-1] ;
   for(int k = n - 2; k >= 0; k--) {
